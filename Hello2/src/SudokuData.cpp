@@ -55,9 +55,9 @@ vector<vector<pair<bool, int>>> SudokuData::getResult() {
 							masterData[row][col].second = masterData[row][col].second+1;
 							validated = boxData.validateAll(masterData) && colData.validateAll(masterData) && rowData.validateAll(masterData);
 						}
-						cout << "test:" << row << " " << col << " " << masterData[row][col].second << endl;
+						//cout << "test:" << row << " " << col << " " << masterData[row][col].second << endl;
 					}else{
-						cout << "fixed: " << row << " " << col << " " << masterData[row][col].second << endl;
+						//cout << "fixed: " << row << " " << col << " " << masterData[row][col].second << endl;
 					}
 					if((!validated && !masterData[row][col].first) || rollback) {
 						if(!masterData[row][col].first)
