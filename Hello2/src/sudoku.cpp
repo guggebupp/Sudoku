@@ -6,10 +6,9 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-#include <iostream>
-#include <vector>
+#include "sudoku.h"
+
 #include "restless.hpp"
-#include "sudoku.hpp"
 #include "sudokuData.hpp"
 #include "SudokuList.h"
 using namespace std;
@@ -27,7 +26,7 @@ void Sudoku::solvesudoku() {
 	SudokuList sudokuList = SudokuList();
 	vector<pair<string, string>> sudokus = sudokuList.translate(list.body);
 	for_each(sudokus.begin(), sudokus.end(),
-			[](pair<string, string> sudoku) {
+			[this](pair<string, string> sudoku) {
 				if(sudoku.second == "IDLE") {
 					cout << "Solving: " << sudoku.first << endl;
 					auto res1 =
@@ -35,8 +34,6 @@ void Sudoku::solvesudoku() {
 							"http://openshifttest-goran2.193b.starter-ca-central-1.openshiftapps.com/rest/sudoku/result/" + sudoku.first).exec();
 
 
-					//	string s =
-					//				"{\"data\":[1,0,0,0,7,0,0,0,0,0,4,0,0,0,0,0,9,0,2,0,0,0,4,9,0,0,0,0,0,8,4,0,6,2,0,0,0,6,0,0,0,0,4,0,3,4,0,3,5,0,8,0,0,0,0,0,1,7,0,3,0,0,0,0,0,0,0,8,0,0,1,0,0,0,0,1,0,0,6,0,5],\"status\":null}";
 					string s = res1.body;
 					s.erase(0, 9);
 
@@ -68,26 +65,48 @@ void Sudoku::solvesudoku() {
 					}
 
 
+
+					pushStatus("IN_PROGRESS", v, sudoku.first);
 					SudokuData sudokuData = SudokuData(v);
 					vector<vector<pair<bool, int>>> res = sudokuData.getResult();
-					string result = "{\"data\":[";
-					for_each(res.begin(), res.end(), [&result](vector<pair<bool, int>> row) {
-								for_each(row.begin(), row.end(), [&result](pair<bool, int> pa) {
-											result.append((char)1, pa.second+48);
-											result.append(",");
-										});
-							});
-					result.pop_back();
-					result.append("],\"status\":\"SOLVED\"}");
+					pushStatus("SOLVED", res, sudoku.first);
+//					string result = "{\"data\":[";
+//					for_each(res.begin(), res.end(), [&result](vector<pair<bool, int>> row) {
+//								for_each(row.begin(), row.end(), [&result](pair<bool, int> pa) {
+//											result.append((char)1, pa.second+48);
+//											result.append(",");
+//										});
+//							});
+//					result.pop_back();
+//					result.append("],\"status\":\"SOLVED\"}");
+//
+//
+//					auto resPost =
+//					Http().content("application/json", result).post(
+//							"http://openshifttest-goran2.193b.starter-ca-central-1.openshiftapps.com/rest/sudoku/solved/" + sudoku.first).exec();
 
-					auto resPost =
-					Http().content("application/json", result).post(
-							"http://openshifttest-goran2.193b.starter-ca-central-1.openshiftapps.com/rest/sudoku/solved/" + sudoku.first).exec();
-					cout << resPost.body << endl;
 				}else{
 					cout << "Already Solved id: " << sudoku.first << " , Status: " << sudoku.second << endl;
 				}
 			});
 
 	return;
+}
+
+void Sudoku::pushStatus(string status, vector<vector<pair<bool, int>>>& res, string id){
+	string result = "{\"data\":[";
+	for_each(res.begin(), res.end(), [&result](vector<pair<bool, int>> row) {
+				for_each(row.begin(), row.end(), [&result](pair<bool, int> pa) {
+							result.append((char)1, pa.second+48);
+							result.append(",");
+						});
+			});
+	result.pop_back();
+	result.append("],\"status\":\"");
+	result.append(status);
+	result.append("\"}");
+
+	auto resPost =
+	Http().content("application/json", result).post(
+			"http://openshifttest-goran2.193b.starter-ca-central-1.openshiftapps.com/rest/sudoku/solved/" + id).exec();
 }

@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include "restless.hpp"
-#include "sudoku.hpp"
+#include "sudoku.h"
 using namespace std;
 
 // for a more readable name
