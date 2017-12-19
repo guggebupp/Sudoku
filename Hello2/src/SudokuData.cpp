@@ -25,15 +25,6 @@ SudokuData::~SudokuData() {
 }
 
 vector<vector<pair<bool, int>>> SudokuData::getResult() {
-	for_each(masterData.begin(), masterData.end(), [this](vector<pair<bool, int>> row){
-		for_each(row.begin(), row.end(), [](pair<bool, int> pa){
-			cout << pa.second << " ";
-
-		});
-		cout << endl;
-	});
-
-	std::vector<std::vector<pair<bool, int>>> result;
 	SudokuBox boxData = SudokuBox();
 	SudokuCol colData = SudokuCol();
 	SudokuRow rowData = SudokuRow();
@@ -71,7 +62,7 @@ vector<vector<pair<bool, int>>> SudokuData::getResult() {
 							col = 7;
 						}else {
 							cout << "ERROR!!!" << endl;
-							return result;
+							return masterData;
 						}
 
 					}
@@ -86,15 +77,8 @@ vector<vector<pair<bool, int>>> SudokuData::getResult() {
 	} else {
 		cout << "Error on indata" << endl;
 	}
-	for_each(masterData.begin(), masterData.end(), [this](vector<pair<bool, int>> row){
-			for_each(row.begin(), row.end(), [](pair<bool, int> pa){
-				cout << pa.second << " ";
 
-			});
-			cout << endl;
-		});
-
-	return result;
+	return masterData;
 
 }
 

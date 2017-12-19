@@ -44,13 +44,4 @@ void SudokuValidator::erase(std::vector<int>& myNumbers_in, int number_in)
 			else
 				stop = true;
 			}
-//    std::vector<int>::iterator iter = myNumbers_in.begin();
-//    std::vector<int>::iterator endIter = myNumbers_in.end();
-//    for(; iter != endIter; ++iter)
-//    {
-//        if(*iter == number_in)
-//        {
-//            myNumbers_in.erase(iter);
-//        }
-//    }
 }
