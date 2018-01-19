@@ -10,6 +10,8 @@
 #include <vector>
 #include <algorithm>
 #include <utility>
+#include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -20,6 +22,7 @@ public:
 	SudokuData(vector<vector<pair<bool, int>>> inData);
 	virtual ~SudokuData();
 	vector<vector<pair<bool, int>>> getResult();
+	string solveSoduko();
 };
 
 #endif /* SUDOKUDATA_HPP_ */

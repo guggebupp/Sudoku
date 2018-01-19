@@ -45,7 +45,7 @@ vector<pair<string, string>> SudokuList::translate(string jsonData){
 					cout << valuesSplit[0] << "," << valuesSplit[1] << endl;
 					if(valuesSplit[0] == "\"id\""){
 						value.first = valuesSplit[1];
-					}else{
+					}else if(valuesSplit[0] == "\"status\""){
 						valuesSplit[1].erase (std::remove(valuesSplit[1].begin(), valuesSplit[1].end(), '\"'), valuesSplit[1].end());
 						value.second = valuesSplit[1];
 					}

@@ -23,6 +23,7 @@ public:
 
 	virtual ~SudokuRow();
 	bool validateAll(vector<vector<pair<bool, int>>> masterData);
+	vector<int> findFixed(vector<vector<pair<bool, int>>> masterData, vector<int> avaliable, int rowToCheck);
 };
 
 #endif /* SUDOKUROW_H_ */

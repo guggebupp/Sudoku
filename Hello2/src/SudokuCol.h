@@ -23,6 +23,7 @@ public:
 	SudokuCol();
 	virtual ~SudokuCol();
 	bool validateAll(vector<vector<pair<bool, int>>> masterData);
+	vector<int> findFixed(vector<vector<pair<bool, int>>> masterData, vector<int> avaliable, int colToCheck);
 };
 
 #endif /* SUDOKUCOL_H_ */
